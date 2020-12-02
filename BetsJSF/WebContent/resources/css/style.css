@@ -1,0 +1,52 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+#left {
+	position: fixed;
+	left: 0;
+	width: 50%;
+	height: 100%;
+}
+
+#right {
+	display: table;
+	position: fixed;
+	right: 0;
+	width: 50%;
+	height: 100%;
+	text-align: center;
+}
+
+.row {
+	display: table-row;
+}
+
+.row img {
+	width: 300px;
+	heigh: 200px;
+	position: absolute;
+	top: 1rem;
+	right: 2rem;
+}
+
+.row button {
+	position: absolute;
+	width: 50%;
+	height: 10%;
+	top:70%;
+}
+
+.row button a{
+	text-decoration: none;
+	color: black;
+}
+.row #btLeft {
+	left: 0%;
+}
+
+.row #btRight {
+	right: 0%;
+}
+

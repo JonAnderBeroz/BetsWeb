@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<h:head>
+		<title>Tables hello</title>
+		<h:outputStylesheet library="css" name="tableStyle.css" />
+	</h:head>
+	<h:body>
+		<h:form id="mainForm">
+			<p:calendar id="data" value="#{hello.data}" navigator="false"
+				mode="inline">
+				<p:ajax event="dateSelect" listener="#{hello.onDateSelect}"
+					update="mainForm:events"></p:ajax>
+			</p:calendar>
+			<h:messages id="mezuak" style="color:blue" />
+			<p:outputPanel id="events" style="display:block">
+			<table id="customers" style="border: none;">
+				<tr>
+					<td><p:dataTable var="event" value="#{hello.eventListOFDate}"
+							selectionMode="single" rowKey="#{event.id}"
+							selection="#{hello.selectedEvent}" scrollable="true"
+							scrollHeight="400">
+							<p:ajax event="rowSelect" update=":mainForm:out" />
+							<p:column headerText="Id">
+								<h:outputText value="#{event.id}" />
+							</p:column>
+
+							<p:column headerText="Description">
+								<h:outputText value="#{event.eventDescription}" />
+							</p:column>
+						</p:dataTable></td>
+					<td><p:outputPanel id="out" style="display:block">
+							<h3>Details:</h3>
+							<table id="customes"
+								style="border-collapse: collapse; width: 500px; height: 500px">
+								<tr id="headers">
+									<th>Atributte</th>
+									<th>Data</th>
+								</tr>
+								<tr>
+									<td>Description</td>
+									<td>#{hello.selectedEvent.eventDescription}</td>
+								</tr>
+								<tr>
+									<td style="width: 200px;">Event date</td>
+									<td>#{hello.selectedEvent.eventDate}</td>
+								</tr>
+							</table>
+						</p:outputPanel></td>
+				</tr>
+			</table>
+			</p:outputPanel>
+			<!-- 			<h:inputText value="#{hello.text}"> -->
+			<!-- 			<p:ajax update="out" /></h:inputText> -->
+			<!-- 			<h:outputText id="out" value="#{hello.selectedEvent.id}" /> -->
+		</h:form>
+	</h:body>
+</f:view>
+</html>

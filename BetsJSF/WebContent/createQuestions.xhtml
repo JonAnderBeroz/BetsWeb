@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<h:head>
+		<title>Create Questions</title>
+		<h:outputStylesheet library="css" name="sideBar.css" />
+		<h:outputStylesheet library="css" name="tableStyle.css" />
+		<h:outputStylesheet library="css" name="style.css" />
+		<h:outputScript library="js" name="sideBar.js" />
+	</h:head>
+	<h:body>
+		<div id="mySidenav" class="sidenav">
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>
+			<a href="index.xhtml">Home</a> <a href="ViewQuestions.xhtml">Galderak
+				Ikusi</a> <a href="createQuestions.xhtml">Galderak Sortu</a>
+		</div>
+
+		<!-- Use any element to open the sidenav -->
+		<span onclick="openNav()"><img
+			src="https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png"
+			width="40px" style="padding-top: 40px; padding-left: 40px;"></img></span>
+
+		<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+		<div id="main">
+			<div id="left">
+				<p:calendar id="data" value="#{test.data}" navigator="false"
+					mode="inline">
+					<p:ajax event="click" listener="#{test.test}"
+						update="mezuak"></p:ajax>
+				</p:calendar>	
+				<h:form>
+				<table>
+					<tr>
+						<td>Galdera:</td>
+						<td><h:inputText id="izen" value="#{login.izena}">
+								<f:validateRegex pattern="^[a-z|A-Z]+[0-9]?$" />
+							</h:inputText></td>
+						<td><h:message for="izen" style="color:red" /></td>
+					</tr>
+					<tr>
+						<td>Apustu minimoa:</td>
+						<td><h:inputSecret id="pass" value="#{login.pasahitza}">
+								<f:validateLongRange minimum="1" maximum="500" />
+								<f:ajax execute="pass" render="mezuak" />
+							</h:inputSecret></td>
+						<td><h:message for="pass" style="color:red" /></td>
+					</tr>
+				</table>
+				<p>
+					<h:commandButton value="Onartu" action="#{login.egiaztatu}" />
+					<h:commandButton value="Pirata" immediate="true" action="error"
+						onclick="if (!confirm('Ziur zaude?')) return false"></h:commandButton>
+				</p>
+			</h:form>
+			<h:messages id="mezuak" style="color:blue" />
+			</div>
+			<div id="right">
+				<div class="pane">
+					<table id="customers">
+						<tr id="header">
+							<th>Galdera#</th>
+							<th>Galdera</th>
+						</tr>
+						<tr>
+							<td>Alfreds Futterkiste</td>
+							<td>Maria Anders</td>
+						</tr>
+						<tr>
+							<td>Berglunds snabbköp</td>
+							<td>Christina Berglund</td>
+						</tr>
+						<tr>
+							<td>Centro comercial Moctezuma</td>
+							<td>Francisco Chang</td>
+						</tr>
+						<tr>
+							<td>Ernst Handel</td>
+							<td>Roland Mendel</td>
+						</tr>
+						<tr>
+							<td>Island Trading</td>
+							<td>Helen Bennett</td>
+						</tr>
+						<tr>
+							<td>Königlich Essen</td>
+							<td>Philip Cramer</td>
+						</tr>
+						<tr>
+							<td>Laughing Bacchus Winecellars</td>
+							<td>Yoshi Tannamuri</td>
+						</tr>
+						<tr>
+							<td>Magazzini Alimentari Riuniti</td>
+							<td>Giovanni Rovelli</td>
+						</tr>
+						<tr>
+							<td>North/South</td>
+							<td>Simon Crowther</td>
+						</tr>
+						<tr>
+							<td>Paris spécialités</td>
+							<td>Marie Bertrand</td>
+						</tr>
+						<tr>
+							<td>Paris spécialités</td>
+							<td>Marie Bertrand</td>
+						</tr>
+						<tr>
+							<td>Paris spécialités</td>
+							<td>Marie Bertrand</td>
+						</tr>
+						<tr>
+							<td>Paris spécialités</td>
+							<td>Marie Bertrand</td>
+						</tr>
+						<tr>
+							<td>Paris spécialités</td>
+							<td>Marie Bertrand</td>
+						</tr>
+						<tr>
+							<td>Paris spécialités</td>
+							<td>Marie Bertrand</td>
+						</tr>
+						<tr>
+							<td>Paris spécialités</td>
+							<td>Marie Bertrand</td>
+						</tr>
+						<tr>
+							<td>Paris spécialités</td>
+							<td>Marie Bertrand</td>
+						</tr>
+						<tr>
+							<td>Paris spécialités</td>
+							<td>Marie Bertrand</td>
+						</tr>
+						<tr>
+							<td>Paris spécialités</td>
+							<td>Marie Bertrand</td>
+						</tr>
+						<tr>
+							<td>Paris spécialités</td>
+							<td>Marie Bertrand</td>
+						</tr>
+						<tr>
+							<td>Paris spécialités</td>
+							<td>Marie Bertrand</td>
+						</tr>
+						<tr>
+							<td>Paris spécialités</td>
+							<td>Marie Bertrand</td>
+						</tr>
+						<tr>
+							<td>Paris spécialités</td>
+							<td>Marie Bertrand</td>
+						</tr>
+						<tr>
+							<td>Paris spécialités</td>
+							<td>Marie Bertrand</td>
+						</tr>
+						<tr>
+							<td>Paris spécialités</td>
+							<td>Marie Bertrand</td>
+						</tr>
+						<tr>
+							<td>Paris spécialités</td>
+							<td>Marie Bertrand</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</h:body>
+</f:view>
+</html>

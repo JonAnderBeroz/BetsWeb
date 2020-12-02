@@ -1,0 +1,35 @@
+#customers {
+	font-family: Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#customers td, #customers th {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+
+#customers tr:hover {
+	background-color: #ddd;
+}
+
+#customers th {
+	padding-top: 12px; padding-bottom : 12px;
+	text-align: left;
+	background-color: #4CAF50;
+	color: white;
+	padding-bottom: 12px;
+}
+
+#customers #header {
+	position: sticky;
+	top: 0%;
+}
+
+.tablePane {
+	display: inline-block;
+	overflow-y: scroll;
+	max-height: 100vh;
+	width: 100%;
+}
+

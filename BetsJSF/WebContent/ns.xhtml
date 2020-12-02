@@ -1,0 +1,65 @@
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+
+<h:body>
+	<h2>Primefaces DataTable Selection Event Example</h2>
+	<h:form id="mainForm">
+		<table>
+			<tr>
+				<td style="width: 300px; border: solid 1px gray;"><p:dataTable
+						var="employee" value="#{employeeBean.employeeList}"
+						selectionMode="single" rowKey="#{employee.id}"
+						selection="#{employeeBean.selectedEmployee}" scrollable="true"
+						scrollHeight="400">
+						<p:ajax event="rowSelect" update=":mainForm:detailsPanel" />
+						<p:column headerText="Id">
+							<h:outputText value="#{employee.id}" />
+						</p:column>
+
+						<p:column headerText="Name">
+							<h:outputText value="#{employee.name}" />
+						</p:column>
+					</p:dataTable></td>
+				<td style="vertical-align: top; padding: 50px;"><p:outputPanel
+						id="detailsPanel" style="display:block">
+						<h3>Details:</h3>
+						<table id="customers">
+							<tr>
+								<td>Name</td>
+								<td>#{employeeBean.selectedEmployee.name}</td>
+							</tr>
+							<tr>
+								<td style="width: 200px;">Phone Number</td>
+								<td>#{employeeBean.selectedEmployee.details.phoneNumber}</td>
+							</tr>
+							<tr>
+								<td>Address</td>
+								<td>#{employeeBean.selectedEmployee.details.address}</td>
+							</tr>
+							<tr>
+								<td>Department</td>
+								<td>#{employeeBean.selectedEmployee.details.dept}</td>
+							</tr>
+							<tr>
+								<td>Email</td>
+								<td>#{employeeBean.selectedEmployee.details.email}</td>
+							</tr>
+							<tr>
+								<td>Employed Since</td>
+								<td>#{employeeBean.selectedEmployee.details.employedSince}</td>
+							</tr>
+						</table>
+					</p:outputPanel></td>
+			</tr>
+		</table>
+	</h:form>
+</h:body>
+
+</html>
+
