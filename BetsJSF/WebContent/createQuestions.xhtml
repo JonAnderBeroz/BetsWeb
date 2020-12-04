@@ -28,150 +28,54 @@
 		<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
 		<div id="main">
 			<div id="left">
-				<p:calendar id="data" value="#{test.data}" navigator="false"
-					mode="inline">
-					<p:ajax event="click" listener="#{test.test}"
-						update="mezuak"></p:ajax>
-				</p:calendar>	
-				<h:form>
-				<table>
-					<tr>
-						<td>Galdera:</td>
-						<td><h:inputText id="izen" value="#{login.izena}">
-								<f:validateRegex pattern="^[a-z|A-Z]+[0-9]?$" />
-							</h:inputText></td>
-						<td><h:message for="izen" style="color:red" /></td>
-					</tr>
-					<tr>
-						<td>Apustu minimoa:</td>
-						<td><h:inputSecret id="pass" value="#{login.pasahitza}">
-								<f:validateLongRange minimum="1" maximum="500" />
-								<f:ajax execute="pass" render="mezuak" />
-							</h:inputSecret></td>
-						<td><h:message for="pass" style="color:red" /></td>
-					</tr>
-				</table>
-				<p>
-					<h:commandButton value="Onartu" action="#{login.egiaztatu}" />
-					<h:commandButton value="Pirata" immediate="true" action="error"
-						onclick="if (!confirm('Ziur zaude?')) return false"></h:commandButton>
-				</p>
-			</h:form>
-			<h:messages id="mezuak" style="color:blue" />
-			</div>
-			<div id="right">
-				<div class="pane">
-					<table id="customers">
-						<tr id="header">
-							<th>Galdera#</th>
-							<th>Galdera</th>
+
+				<h:form id="leftForm">
+					<p:calendar id="data" value="#{hello.data}" navigator="false"
+						mode="inline">
+						<p:ajax event="dateSelect" listener="#{hello.onDateSelect}"
+							update=":rightForm:events"></p:ajax>
+					</p:calendar>
+					<table style="margin-top: 2rem;">
+						<tr>
+							<td>Galdera:</td>
+							<td><h:inputText id="question" value="#{hello.question}">
+								</h:inputText></td>
 						</tr>
 						<tr>
-							<td>Alfreds Futterkiste</td>
-							<td>Maria Anders</td>
+							<td>Apustu minimoa:</td>
+							<td><h:inputText id="bet" value="#{hello.bet}">
+								</h:inputText></td>
 						</tr>
 						<tr>
-							<td>Berglunds snabbköp</td>
-							<td>Christina Berglund</td>
-						</tr>
-						<tr>
-							<td>Centro comercial Moctezuma</td>
-							<td>Francisco Chang</td>
-						</tr>
-						<tr>
-							<td>Ernst Handel</td>
-							<td>Roland Mendel</td>
-						</tr>
-						<tr>
-							<td>Island Trading</td>
-							<td>Helen Bennett</td>
-						</tr>
-						<tr>
-							<td>Königlich Essen</td>
-							<td>Philip Cramer</td>
-						</tr>
-						<tr>
-							<td>Laughing Bacchus Winecellars</td>
-							<td>Yoshi Tannamuri</td>
-						</tr>
-						<tr>
-							<td>Magazzini Alimentari Riuniti</td>
-							<td>Giovanni Rovelli</td>
-						</tr>
-						<tr>
-							<td>North/South</td>
-							<td>Simon Crowther</td>
-						</tr>
-						<tr>
-							<td>Paris spécialités</td>
-							<td>Marie Bertrand</td>
-						</tr>
-						<tr>
-							<td>Paris spécialités</td>
-							<td>Marie Bertrand</td>
-						</tr>
-						<tr>
-							<td>Paris spécialités</td>
-							<td>Marie Bertrand</td>
-						</tr>
-						<tr>
-							<td>Paris spécialités</td>
-							<td>Marie Bertrand</td>
-						</tr>
-						<tr>
-							<td>Paris spécialités</td>
-							<td>Marie Bertrand</td>
-						</tr>
-						<tr>
-							<td>Paris spécialités</td>
-							<td>Marie Bertrand</td>
-						</tr>
-						<tr>
-							<td>Paris spécialités</td>
-							<td>Marie Bertrand</td>
-						</tr>
-						<tr>
-							<td>Paris spécialités</td>
-							<td>Marie Bertrand</td>
-						</tr>
-						<tr>
-							<td>Paris spécialités</td>
-							<td>Marie Bertrand</td>
-						</tr>
-						<tr>
-							<td>Paris spécialités</td>
-							<td>Marie Bertrand</td>
-						</tr>
-						<tr>
-							<td>Paris spécialités</td>
-							<td>Marie Bertrand</td>
-						</tr>
-						<tr>
-							<td>Paris spécialités</td>
-							<td>Marie Bertrand</td>
-						</tr>
-						<tr>
-							<td>Paris spécialités</td>
-							<td>Marie Bertrand</td>
-						</tr>
-						<tr>
-							<td>Paris spécialités</td>
-							<td>Marie Bertrand</td>
-						</tr>
-						<tr>
-							<td>Paris spécialités</td>
-							<td>Marie Bertrand</td>
-						</tr>
-						<tr>
-							<td>Paris spécialités</td>
-							<td>Marie Bertrand</td>
-						</tr>
-						<tr>
-							<td>Paris spécialités</td>
-							<td>Marie Bertrand</td>
+							<td><p:outputLabel id="event" value="#{hello.selectedEvent}"></p:outputLabel>
+							</td>
 						</tr>
 					</table>
-				</div>
+					<p>
+						<h:commandButton value="Galdera igorri"
+							action="#{hello.submitQuestion}" />
+					</p>
+					<h:messages style="color:red" />
+				</h:form>
+			</div>
+			<div id="right">
+				<h:form id="rightForm">
+					<p:outputPanel id="events">
+						<p:dataTable var="event" selectionMode="single"
+							rowKey="#{event.eventNumber}" value="#{hello.eventListOFDate}"
+							selection="#{hello.selectedEvent}" scrollable="true"
+							scrollHeight="400">
+							<p:ajax event="rowSelect" update=":leftForm:event" />
+							<p:column headerText="Id">
+								<h:outputText value="#{event.eventNumber}" />
+							</p:column>
+
+							<p:column headerText="Description">
+								<h:outputText value="#{event.description}" />
+							</p:column>
+						</p:dataTable>
+					</p:outputPanel>
+				</h:form>
 			</div>
 		</div>
 	</h:body>

@@ -10,7 +10,6 @@
 		<title>Create Questions</title>
 		<h:outputStylesheet library="css" name="sideBar.css" />
 		<h:outputStylesheet library="css" name="tableStyle.css" />
-		<h:outputStylesheet library="css" name="style.css" />
 		<h:outputScript library="js" name="sideBar.js" />
 	</h:head>
 	<h:body>
@@ -25,213 +24,56 @@
 			src="https://cdn4.iconfinder.com/data/icons/wirecons-free-vector-icons/32/menu-alt-512.png"
 			width="40px" style="padding-top: 40px; padding-left: 40px;"></img></span>
 
-		<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+		<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used i
+		if you only want the sidenav to sit on top of the page -->
 		<div id="main">
-			<div id="left">
-				<h:form id="mainForm">
-					<p:calendar id="data" value="#{hello.data}" navigator="false"
-						mode="inline">
-						<p:ajax event="dateSelect" listener="#{hello.onDateSelect}"
-							update="mainForm:events"></p:ajax>
-					</p:calendar>
-					<h:messages id="mezuak" style="color:blue" />
-					<p:outputPanel id="events" style="display:block">
-						<table id="customers" style="border: none;">
-							<tr>
-								<td style="width: 50%;"><p:dataTable var="event"
-										value="#{hello.eventListOFDate}" selectionMode="single"
-										rowKey="#{event.id}" selection="#{hello.selectedEvent}"
-										scrollable="true" scrollHeight="400">
-										<p:ajax event="rowSelect" update=":sideForm:out" />
-										<p:column headerText="Id">
-											<h:outputText value="#{event.id}" />
-										</p:column>
+			<!-- Creating the form where the calendar and the tables are going to be placed -->
+			<h:form id="mainForm">
+				<p:calendar id="data" value="#{hello.data}" navigator="false"
+					mode="inline">
+					<!-- Creating an event for the calendar, when date is selected bean is called and the event datatable 
+					updates -->
+					<p:ajax event="dateSelect" listener="#{hello.onDateSelect}"
+						update="mainForm:events"></p:ajax>
+				</p:calendar>
+				<!-- The output panel will contain table where event and question datatables are set-->
+				<p:outputPanel id="events">
+					<table id="customers" >
+						<tr>
+							<!-- Creating the event dataTable, when a row is select the question datatable will be updated to 
+							show the question related to the event selected -->
+							<td style="width: 50%;"><p:dataTable var="event"
+									value="#{hello.eventListOFDate}" selectionMode="single"
+									rowKey="#{event.eventNumber}"
+									selection="#{hello.selectedEvent}" scrollable="true"
+									scrollHeight="400">
+									<p:ajax event="rowSelect" update=":mainForm:out" />
+									<p:column headerText="Id">
+										<h:outputText value="#{event.eventNumber}" />
+									</p:column>
 
-										<p:column headerText="Description">
-											<h:outputText value="#{event.eventDescription}" />
+									<p:column headerText="Description">
+										<h:outputText value="#{event.description}" />
+									</p:column>
+								</p:dataTable></td>
+							<!-- In order to update the question table a new outputPanel need to be created, this panel
+							will display the question for the previously selected event -->
+							<td><p:outputPanel id="out">
+									<p:dataTable var="Question"
+										value="#{hello.selectedEvent.questions}" scrollable="true"
+										scrollHeight="400">
+										<p:column headerText="QuestionNumber">
+											<h:outputText value="#{Question.questionNumber}" />
 										</p:column>
-									</p:dataTable></td>
-							</tr>
-						</table>
-					</p:outputPanel>
-				</h:form>
-			</div>
-			<div id="right">
-				<h:form id="sideForm">
-					<p:outputPanel id="out" style="display:block">
-						<div id="tablePane">
-							<table id="customers">
-								<tr id="headers">
-									<th>Atributte</th>
-									<th>Data</th>
-								</tr>
-								<tr>
-									<td>Description</td>
-									<td>#{hello.selectedEvent.eventDescription}</td>
-								</tr>
-								<tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr>
-								<tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr><tr>
-									<td style="width: 200px;">Event date</td>
-									<td>#{hello.selectedEvent.eventDate}</td>
-								</tr>
-							</table>
-						</div>
-					</p:outputPanel>
-				</h:form>
-			</div>
+										<p:column headerText="Description">
+											<h:outputText value="#{Question.question}" />
+										</p:column>
+									</p:dataTable>
+								</p:outputPanel></td>
+						</tr>
+					</table>
+				</p:outputPanel>
+			</h:form>
 		</div>
 	</h:body>
 </f:view>

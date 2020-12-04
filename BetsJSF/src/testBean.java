@@ -1,71 +1,30 @@
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-
 import org.primefaces.event.SelectEvent;
 
+import businessLogic.BLFacade;
 import domain.Event;
+import exceptions.EventFinished;
+import exceptions.QuestionAlreadyExist;
 
 public class testBean {
 	private Date data;
-	private List<Event> eventList = new ArrayList<Event>();
-	private List<Event> eventListOFDate = new ArrayList<Event>();
-    public List<Event> getEventListOFDate() {
-		return eventListOFDate;
-	}
-	public void setEventListOFDate(List<Event> eventListOFDate) {
-		this.eventListOFDate = eventListOFDate;
-	}
-	private Event selectedEvent;
-    private int index = 0;
-    private String text="";
-	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	public testBean() {
-		Date date;
-		try {
-			date = sdf.parse("2020-12-11");
-			this.index +=1;
-			Event event1= new Event(this.index, "Description " + this.index, date);
-			this.index +=1;
-			Event event2= new Event(this.index, "Description " + this.index, date);
-			this.index +=1;
-			Event event3= new Event(this.index, "Description " + this.index, date);
-			this.index +=1;
-			Event event4= new Event(this.index, "Description " + this.index, date);
-			this.index +=1;
-			Event event5= new Event(this.index, "Description " + this.index, date);
-			this.index +=1;
-			Event event6= new Event(this.index, "Description " + this.index, date);
-			this.index +=1;
-			Event event7= new Event(this.index , "Description " + this.index, date);
-			this.index +=1;
-			Event event8= new Event(this.index , "Description " + this.index, date);
-			this.index +=1;
-			Event event9= new Event(this.index, "Description " + this.index, date);
-			this.index +=1;
-			eventList.add(event1);
-			eventList.add(event2);
-			eventList.add(event3);
-			eventList.add(event4);
-			eventList.add(event5);
-			eventList.add(event6);
-			eventList.add(event7);
-			eventList.add(event8);
-			eventList.add(event9);
-			this.text ="hello";
+	private String question = "";
+	private int bet;
+	private Vector<Event> eventListOFDate = new Vector<Event>();
 
-		} catch (ParseException e) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage("Error parsin date"));
-		}
-	}
+
+	private Event selectedEvent;
+    private String text="";
+	
+	public testBean() {
+			}
 	public Date getData() {
 		return data;
 	}
@@ -73,23 +32,20 @@ public class testBean {
 		this.data = data;
 	}
 	public void onDateSelect(SelectEvent event) {
+		//Getting user selected date
 		Date date= (Date)event.getObject();
-		eventListOFDate.clear();
-		for (Event event2 : eventList) {
-			if (event2.getEventDate().equals(date)) {
-				eventListOFDate.add(event2);
-			}
-		}
-		FacesContext.getCurrentInstance().addMessage(null,
-		new FacesMessage("Data aukeratua: "+event.getObject()));
-	}
-	public List<Event> getEventList() {
-		return eventList;
+		//Clearing the list of the events for tht day and reseting selected event
+		this.eventListOFDate.clear();
+		selectedEvent=null;
+		//Getting events for the selected day; 
+		BLFacade bl =  FacadeBean.getBusinessLogic();
+		this.eventListOFDate = bl.getEvents(date);
 	}
 	public Event getSelectedEvent() {
 		return selectedEvent;
 	}
 	public void setSelectedEvent(Event selectedEvent) {
+		System.out.println("in");
 		this.selectedEvent = selectedEvent;
 	}
     public String getText() {
@@ -98,5 +54,61 @@ public class testBean {
 	public void setText(String text) {
 		this.text = text;
 	}
-	
+    public List<Event> getEventListOFDate() {
+		return eventListOFDate;
+	}
+	public void setEventListOFDate(Vector<Event> eventListOFDate) {
+		this.eventListOFDate = eventListOFDate;
+	}
+	public String getQuestion() {
+		return question;
+	}
+	public void setQuestion(String question) {
+		this.question = question;
+	}
+	public int getBet() {
+		return bet;
+	}
+	public void setBet(int bet) {
+		this.bet = bet;
+	}
+	public String submitQuestion() {
+		//chechk if submited data is valid
+		if(this.bet < 0){
+			System.out.println("Invalid bet amount");
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage("Errorea: Apustu kopurua okerra da."));
+			return null;
+		}else if(this.question.equals("")){
+			System.out.println("Invalid Question");
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage("Errorea: Sorturiko galdera okerra da."));
+			return null;
+		}else if(this.selectedEvent == null){
+			System.out.println("Invalid even selection");
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage("Errorea: Galdera igorri baino lehen eventu bat aukeratu."));
+			return null;
+		}else{
+			//call to the bl to create teh question for the selected event
+			BLFacade bl =  FacadeBean.getBusinessLogic();
+			System.out.println(this.selectedEvent.getClass());
+			try {
+				bl.createQuestion(this.selectedEvent, this.question, this.bet);
+				//reset parameters to deafault value
+				this.question = "";
+				this.bet = 0;
+				return "ok";
+			} catch (EventFinished e) {
+				System.out.println(e.getMessage());
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage("Errorea: Aukeratutako eventoa bukatu da"));
+				return null;
+			} catch (QuestionAlreadyExist e) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage("Errorea: Galdera dagoeneko sortua dago" ));
+				return null;
+			}
+		}
+	}
 }
