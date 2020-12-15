@@ -6,7 +6,7 @@
 	version="2.0">
 	<managed-bean>
 		<managed-bean-name>hello</managed-bean-name>
-		<managed-bean-class>testBean</managed-bean-class>
+		<managed-bean-class>Betsbean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<navigation-rule>
